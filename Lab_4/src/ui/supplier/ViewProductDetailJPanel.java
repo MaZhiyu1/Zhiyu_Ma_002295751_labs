@@ -341,8 +341,11 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         public void refreshTable1() {
         DefaultTableModel model = (DefaultTableModel)tblFeatures1.getModel();
         model.setRowCount(0);
+        HashSet<String> hs = new HashSet<>();
         for(Product p : supplier.getProductCatalog().getProductCatalog()) {
             for(Feature s : p.getFeatures()){
+                if(hs.contains(s.toString())) continue;
+                hs.add(s.toString());
                 Object row[] = new Object[2];
                 row[0] = s;
                 row[1] = s.getValue() == null? "Empty":s.getValue().toString();
@@ -365,7 +368,7 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         Feature newFeature = product.addNewFeature();
         newFeature.setName(s.getName());
         newFeature.setValue(s.getValue());
-        
+        refreshTable();
     }//GEN-LAST:event_btnAddFeature1ActionPerformed
 
     public void refreshTable() {
